@@ -37,6 +37,7 @@ async function run(){
 
   try{
     const UserServiceCollection = client.db('ServiceUsers').collection('foodserviceDa');
+    const ReviesCollecton = client.db('ServiceUsers').collection('reviewsCollect');
     app.get('/home', async(req,res)=>{
 
       const quiry ={}
@@ -61,6 +62,52 @@ async function run(){
       res.send(dataDetails)
       console.log(dataDetails);
     })
+
+    // my riviews added 
+
+    app.get('/myreviews',async(req,res)=>{
+let query = {};
+if(req.query.email){
+  query={
+
+    email:req.query.email
+  }
+
+}
+const cursor = ReviesCollecton.find(query)
+const myreviess = await cursor.toArray()
+res.send(myreviess)
+
+    })
+    // --------------
+    // my service added
+    app.post('/myservice',async(req,res)=>{
+const data = req.body
+const result = await UserServiceCollection.insertOne(data)
+res.send(result)
+console.log(result);
+       
+    })
+    // Revies 
+   
+    app.post('/reviews',async(req,res)=>{
+
+
+      const dataReview = req.body;
+      const dataRev= await ReviesCollecton.insertOne(dataReview);
+      res.send(dataRev)
+
+    })
+    // reviews delete
+    app.delete('/reviews/:id',async(req,res)=>{
+      const id=req.params.id
+      console.log(id);
+      const query= { _id : ObjectId(id)}
+      console.log(query);
+      const result = await ReviesCollecton.deleteOne(query)
+      
+      res.send(result);
+  })
 
 
   }
