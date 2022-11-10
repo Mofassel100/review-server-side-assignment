@@ -28,11 +28,7 @@ app.get('/',(req,res)=>{
 const uri = `mongodb+srv://${ process.env.DB_User}:${process.env.DB_Password}@cluster0.0vygy0s.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
+
 async function run(){
 
   try{
@@ -60,7 +56,7 @@ async function run(){
       const dataDetails = await UserServiceCollection.findOne(query)
        
       res.send(dataDetails)
-      console.log(dataDetails);
+    
     })
 
     // my riviews added 
@@ -81,16 +77,7 @@ res.send(myreviess)
     })
 
     // --------------
-    // app.get('/services/:id', async(req,res)=>{
-    //   const id= req.params.id;
-
-
-    //   const query ={ _id:ObjectId(id)}
-    //   const dataDetails = await ReviesCollecton.find(query)
-       
-    //   res.send(dataDetails)
-    //   console.log(dataDetails);
-    // })
+   
 
     
     // my service added
@@ -111,17 +98,7 @@ res.send(result)
       res.send(dataRev)
 
     })
-// all review data loaded
-
-// app.get('/allreviews/:id',async(req,res)=>{
-//   const {id}= req.params;
-
-//   const query = {_id:ObjectId(id)}
-//   const cursor = ReviesCollecton.find(query)
-//   const result = await cursor.toArray()
-//   res.send(result)
-// })
-    //updat reviw data loaded 
+ 
     app.get('/reviews',async(req,res)=>{
 
       const query= {}
@@ -137,7 +114,7 @@ res.send(result)
     app.patch ('/reviews/:id',async(req,res)=>{
       const id= req.params.id;
       const review = req.body.review;
-      console.log(review);
+     
 
       const query = {_id:ObjectId(id)}
       console.log(query);
@@ -151,7 +128,7 @@ res.send(result)
       }
       const result = await ReviesCollecton.updateMany(query,updateDocs)
       res.send(result)
-      console.log(result);
+   
     })
     // reviews delete
     app.delete('/reviews/:id',async(req,res)=>{
@@ -171,7 +148,7 @@ res.send(result)
   }
 }
 run().catch(error=>{
-  console.log(error.bgRed)
+  
 })
 
 
