@@ -79,7 +79,20 @@ const myreviess = await cursor.toArray()
 res.send(myreviess)
 
     })
+
     // --------------
+    // app.get('/services/:id', async(req,res)=>{
+    //   const id= req.params.id;
+
+
+    //   const query ={ _id:ObjectId(id)}
+    //   const dataDetails = await ReviesCollecton.find(query)
+       
+    //   res.send(dataDetails)
+    //   console.log(dataDetails);
+    // })
+
+    
     // my service added
     app.post('/myservice',async(req,res)=>{
 const data = req.body
@@ -100,16 +113,29 @@ res.send(result)
     })
 // all review data loaded
 
-app.get('/allreviews',async(req,res)=>{
+// app.get('/allreviews/:id',async(req,res)=>{
+//   const {id}= req.params;
 
-  const query = {}
-  const cursor = ReviesCollecton.find(query)
-  const result = await cursor.toArray()
-  res.send(result)
-})
+//   const query = {_id:ObjectId(id)}
+//   const cursor = ReviesCollecton.find(query)
+//   const result = await cursor.toArray()
+//   res.send(result)
+// })
     //updat reviw data loaded 
+    app.get('/reviews',async(req,res)=>{
+
+      const query= {}
+      const cursor=  ReviesCollecton.find(query)
+      const result =await cursor.toArray()
+    
+      
+   
+      res.send(result)
+    })
+
+
     app.patch ('/reviews/:id',async(req,res)=>{
-      const {id}= req.params;
+      const id= req.params.id;
       const review = req.body.review;
       console.log(review);
 
