@@ -85,7 +85,7 @@ res.send(myreviess)
 const data = req.body
 const result = await UserServiceCollection.insertOne(data)
 res.send(result)
-console.log(result);
+
        
     })
     // Revies 
@@ -98,12 +98,41 @@ console.log(result);
       res.send(dataRev)
 
     })
+// all review data loaded
+
+app.get('/allreviews',async(req,res)=>{
+
+  const query = {}
+  const cursor = ReviesCollecton.find(query)
+  const result = await cursor.toArray()
+  res.send(result)
+})
+    //updat reviw data loaded 
+    app.patch ('/reviews/:id',async(req,res)=>{
+      const {id}= req.params;
+      const review = req.body.review;
+      console.log(review);
+
+      const query = {_id:ObjectId(id)}
+      console.log(query);
+      const updateDocs={
+
+        $set:{
+          review:review
+
+        }
+        
+      }
+      const result = await ReviesCollecton.updateMany(query,updateDocs)
+      res.send(result)
+      console.log(result);
+    })
     // reviews delete
     app.delete('/reviews/:id',async(req,res)=>{
       const id=req.params.id
-      console.log(id);
+     
       const query= { _id : ObjectId(id)}
-      console.log(query);
+  
       const result = await ReviesCollecton.deleteOne(query)
       
       res.send(result);
